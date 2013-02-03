@@ -5,11 +5,9 @@ import sys
 class ZipfSong:
     def __init__(self):
         self.songs = []
-        self.totalPlayCount = 0
 
     def addSong(self, i, f, s):
         self.songs.append((i, f, s))
-        self.totalPlayCount += f
 
     def topQualitySongs(self, m):
         if m <= 0:
