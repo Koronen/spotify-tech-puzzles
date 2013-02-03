@@ -30,6 +30,34 @@ class TestZipfSong(unittest.TestCase):
             (0, 10, "Foo"),
         ])
 
+    def test_compareSongs_x_better(self):
+        zs = ZipfSong()
+        self.assertEquals(zs.compareSongs(
+            (0, 12, "x"),
+            (1, 5, "y")
+        ), 1)
+
+    def test_compareSongs_y_better(self):
+        zs = ZipfSong()
+        self.assertEquals(zs.compareSongs(
+            (0, 10, "x"),
+            (1, 7, "y")
+        ), -1)
+
+    def test_compareSongs_same_quality_x_first(self):
+        zs = ZipfSong()
+        self.assertEquals(zs.compareSongs(
+            (0, 10, "x"),
+            (1, 5, "y")
+        ), 1)
+
+    def test_compareSongs_same_quality_y_first(self):
+        zs = ZipfSong()
+        self.assertEquals(zs.compareSongs(
+            (1, 5, "x"),
+            (0, 10, "y")
+        ), -1)
+
 if __name__ == '__main__':
     unittest.main()
 

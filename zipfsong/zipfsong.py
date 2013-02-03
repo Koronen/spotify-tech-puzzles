@@ -15,7 +15,7 @@ class ZipfSong:
         if m <= 0:
             return []
 
-        return sorted(self.songs, cmp=self.compareSongs)[:m]
+        return sorted(self.songs, cmp=self.compareSongs, reverse=True)[:m]
 
     def compareSongs(self, x, y):
         qd = 0
@@ -31,7 +31,7 @@ class ZipfSong:
         if qd != 0:
             return qd
         else:
-            return cmp(self.songIndex(*x), self.songIndex(*y))
+            return -cmp(self.songIndex(*x), self.songIndex(*y))
 
     def songIndex(self, i, f, s):
         return i
