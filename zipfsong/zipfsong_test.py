@@ -30,6 +30,17 @@ class TestZipfSong(unittest.TestCase):
             (0, 10, "Foo"),
         ])
 
+    def test_topQualitySongs_first_song_no_plays(self):
+        zs = ZipfSong()
+        zs.addSong(0, 0, "Foo")
+        zs.addSong(1, 10, "Bar")
+        zs.addSong(2, 5, "Baz")
+        self.assertEquals(zs.topQualitySongs(3), [
+            (1, 10, "Bar"),
+            (2, 5, "Baz"),
+            (0, 0, "Foo"),
+        ])
+
     def test_compareSongs_x_better(self):
         zs = ZipfSong()
         zs.addSong(0, 12, "x")

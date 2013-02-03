@@ -20,9 +20,9 @@ class ZipfSong:
         return sorted(self.songs, cmp=self.compareSongs, reverse=True)[:m]
 
     def compareSongs(self, x, y):
-        expected_x_play_count = self.firstSongPlayCount / (1.0+self.songIndex(*x))
-        expected_y_play_count = self.firstSongPlayCount / (1.0+self.songIndex(*y))
-        qd = cmp(self.songPlayCount(*x) / expected_x_play_count, self.songPlayCount(*y) / expected_y_play_count)
+        qx = (1.0+self.songIndex(*x)) * self.songPlayCount(*x)
+        qy = (1.0+self.songIndex(*y)) * self.songPlayCount(*y)
+        qd = cmp(qx, qy)
 
         if qd != 0:
             return qd
