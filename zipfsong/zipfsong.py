@@ -5,9 +5,13 @@ import sys
 class ZipfSong:
     def __init__(self):
         self.songs = []
+        self.firstSongPlayCount = -1
 
     def addSong(self, i, f, s):
         self.songs.append((i, f, s))
+
+        if i == 0:
+            self.firstSongPlayCount = f
 
     def topQualitySongs(self, m):
         if m <= 0:
@@ -16,15 +20,9 @@ class ZipfSong:
         return sorted(self.songs, cmp=self.compareSongs, reverse=True)[:m]
 
     def compareSongs(self, x, y):
-        qd = 0
-
-        id = self.songIndex(*y) - self.songIndex(*x)
-        if id > 0: # x comes first
-            expected_x_play_count = self.songPlayCount(*y) * (id+1)
-            qd = cmp(self.songPlayCount(*x), expected_x_play_count)
-        else: # y comes first
-            expected_y_play_count = self.songPlayCount(*x) * (-id+1)
-            qd = cmp(self.songPlayCount(*y), expected_y_play_count)
+        expected_x_play_count = self.firstSongPlayCount / (1.0+self.songIndex(*x))
+        expected_y_play_count = self.firstSongPlayCount / (1.0+self.songIndex(*y))
+        qd = cmp(self.songPlayCount(*x) / expected_x_play_count, self.songPlayCount(*y) / expected_y_play_count)
 
         if qd != 0:
             return qd

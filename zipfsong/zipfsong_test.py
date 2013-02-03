@@ -32,6 +32,7 @@ class TestZipfSong(unittest.TestCase):
 
     def test_compareSongs_x_better(self):
         zs = ZipfSong()
+        zs.addSong(0, 12, "x")
         self.assertEquals(zs.compareSongs(
             (0, 12, "x"),
             (1, 5, "y")
@@ -39,6 +40,7 @@ class TestZipfSong(unittest.TestCase):
 
     def test_compareSongs_y_better(self):
         zs = ZipfSong()
+        zs.addSong(0, 10, "x")
         self.assertEquals(zs.compareSongs(
             (0, 10, "x"),
             (1, 7, "y")
@@ -46,6 +48,7 @@ class TestZipfSong(unittest.TestCase):
 
     def test_compareSongs_same_quality_x_first(self):
         zs = ZipfSong()
+        zs.addSong(0, 10, "x")
         self.assertEquals(zs.compareSongs(
             (0, 10, "x"),
             (1, 5, "y")
@@ -53,6 +56,7 @@ class TestZipfSong(unittest.TestCase):
 
     def test_compareSongs_same_quality_y_first(self):
         zs = ZipfSong()
+        zs.addSong(0, 10, "y")
         self.assertEquals(zs.compareSongs(
             (1, 5, "x"),
             (0, 10, "y")
