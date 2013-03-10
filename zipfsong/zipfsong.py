@@ -2,16 +2,30 @@
 
 import sys
 
+class Song:
+    def __init__(self, i, f, s):
+        self.i = i
+        self.f = f
+        self.s = s
+
+    def index(self):
+        return self.i
+
+    def playCount(self):
+        return self.f
+
+    def title(self):
+        return self.s
+
+    def __cmp__(self, other):
+        return self.i - other.index()
+
 class ZipfSong:
     def __init__(self):
         self.songs = []
-        self.firstSongPlayCount = -1
 
-    def addSong(self, i, f, s):
-        self.songs.append((i, f, s))
-
-        if i == 0:
-            self.firstSongPlayCount = f
+    def addSong(self, song):
+        self.songs.append(song)
 
     def topQualitySongs(self, m):
         if m <= 0:
@@ -20,24 +34,14 @@ class ZipfSong:
         return sorted(self.songs, cmp=self.compareSongs, reverse=True)[:m]
 
     def compareSongs(self, x, y):
-        qx = (1.0+self.songIndex(*x)) * self.songPlayCount(*x)
-        qy = (1.0+self.songIndex(*y)) * self.songPlayCount(*y)
+        qx = (1.0+x.index()) * x.playCount()
+        qy = (1.0+y.index()) * y.playCount()
         qd = cmp(qx, qy)
 
         if qd != 0:
             return qd
         else:
-            return -cmp(self.songIndex(*x), self.songIndex(*y))
-
-    def songIndex(self, i, f, s):
-        return i
-
-    def songPlayCount(self, i, f, s):
-        return f
-
-    def songTitle(self, i, f, s):
-        return s
-
+            return -cmp(x.index(), y.index())
 
 def main():
     (n, m) = [int(i) for i in sys.stdin.readline().split(" ")]
@@ -45,9 +49,9 @@ def main():
     zs = ZipfSong()
     for i in range(n):
         (fi, si) = sys.stdin.readline().split(" ", 1)
-        zs.addSong(i, int(fi), si.strip())
+        zs.addSong(Song(i, int(fi), si.strip()))
 
-    for s in map(lambda s: zs.songTitle(*s), zs.topQualitySongs(m)):
+    for s in map(lambda s: s.title(), zs.topQualitySongs(m)):
         print s
 
 if __name__ == '__main__':
